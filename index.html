@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trellix - Collaborative Kanban</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>Trellix</h1>
+      <div class="topbar-right">
+        <div id="presence" class="presence">Offline</div>
+        <button id="rename-user-btn" class="btn btn-secondary">Change Name</button>
+        <button id="add-column-btn" class="btn">+ Add List</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section id="board" class="board" aria-label="Kanban Board"></section>
+      <aside class="sidebar">
+        <section>
+          <h2>Board Modules</h2>
+          <div id="module-toggles" class="module-toggles"></div>
+        </section>
+        <section>
+          <h2>Master Contacts</h2>
+          <ul id="master-contacts" class="master-contacts"></ul>
+        </section>
+      </aside>
+    </main>
+
+    <dialog id="column-dialog">
+      <form method="dialog" id="column-form" class="modal-form">
+        <h2>Create List</h2>
+        <label>
+          List name
+          <input id="column-title" name="title" maxlength="40" required />
+        </label>
+        <menu>
+          <button value="cancel" class="btn btn-secondary">Cancel</button>
+          <button value="default" class="btn">Create</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <template id="column-template">
+      <article class="column" draggable="true">
+        <header class="column-header">
+          <h3 class="column-title"></h3>
+          <button class="icon-btn delete-column" title="Delete list">✕</button>
+        </header>
+        <ul class="card-list"></ul>
+        <form class="add-card-form">
+          <input class="card-input" placeholder="Add a card..." maxlength="120" required />
+          <button class="btn">Add</button>
+        </form>
+      </article>
+    </template>
+
+    <template id="card-template">
+      <li class="card" draggable="true">
+        <div class="card-head">
+          <button class="icon-btn expand-card" title="Open details">📁</button>
+          <span class="card-text"></span>
+          <button class="btn btn-small complete-card">Mark Complete</button>
+          <select class="rag-select" title="RAG status">
+            <option value="red">🔴</option>
+            <option value="amber">🟠</option>
+            <option value="green">🟢</option>
+          </select>
+          <button class="icon-btn close-fullscreen" title="Close details">✕</button>
+          <button class="icon-btn delete-card" title="Delete card">🗑</button>
+        </div>
+        <section class="card-folder hidden" aria-hidden="true">
+          <details data-module="todo" open>
+            <summary>Todo list</summary>
+            <ul class="todo-list"></ul>
+            <form class="todo-form inline-form">
+              <input class="todo-input" placeholder="New todo" maxlength="120" required />
+              <select class="todo-link-select"></select>
+              <button class="btn btn-small">Add</button>
+            </form>
+          </details>
+
+          <details data-module="notes">
+            <summary>Plain text notepad</summary>
+            <textarea class="notes" rows="5" placeholder="Write notes..."></textarea>
+          </details>
+
+          <details data-module="media">
+            <summary>Attachments</summary>
+            <ul class="media-list"></ul>
+            <form class="media-url-form inline-form">
+              <input class="media-input" placeholder="https://..." maxlength="300" required />
+              <button class="btn btn-small">Attach URL</button>
+            </form>
+            <form class="media-file-form inline-form">
+              <input class="media-file-input" type="file" />
+              <button class="btn btn-small">Upload File</button>
+            </form>
+          </details>
+
+          <details data-module="gating">
+            <summary>Gating factors (depends on cards)</summary>
+            <ul class="gating-list"></ul>
+            <form class="gating-form inline-form">
+              <select class="gating-select"></select>
+              <button class="btn btn-small">Add gate</button>
+            </form>
+          </details>
+
+          <details data-module="contacts">
+            <summary>Contacts</summary>
+            <ul class="contact-list"></ul>
+            <form class="contact-form contact-grid">
+              <input class="contact-name" placeholder="Name (required)" maxlength="80" required />
+              <input class="contact-number" placeholder="Number (required)" maxlength="40" required />
+              <input class="contact-role" placeholder="Role" maxlength="80" />
+              <input class="contact-company" placeholder="Company" maxlength="80" />
+              <input class="contact-email" placeholder="Email" maxlength="120" />
+              <input class="contact-birthday" type="date" />
+              <input class="contact-rating" type="number" min="1" max="5" placeholder="Rating 1-5" />
+              <textarea class="contact-notes" rows="2" placeholder="Notes"></textarea>
+              <button class="btn btn-small">Add Contact</button>
+            </form>
+          </details>
+        </section>
+      </li>
+    </template>
+
+    <script src="script.js"></script>
+  </body>
+</html>
