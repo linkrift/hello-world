@@ -1,0 +1,11 @@
+{
+  "name": "trellix",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A lightweight Trello-style kanban board",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "check": "node --check script.js"
+  }
+}
